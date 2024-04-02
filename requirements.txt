@@ -16,5 +16,3 @@ rospy==1.16.0
 sensor_msgs==1.13.1
 tf==1.13.2
 urdfdom_py==0.4.6
-
-# -e git+https://github.com/UM-ARM-Lab/pytorch_kinematics.git#egg=pytorch_kinematics
