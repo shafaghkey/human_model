@@ -18,13 +18,13 @@ find_package(catkin REQUIRED COMPONENTS
   tf2
 )
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS system)
 find_package(Eigen3 REQUIRED)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
-# catkin_python_setup()
+catkin_python_setup()
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -107,17 +107,17 @@ find_package(Eigen3 REQUIRED)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
- INCLUDE_DIRS include
- LIBRARIES human_model
- CATKIN_DEPENDS 
-  roscpp
-  rospy
-  std_msgs
-  geometry_msgs
-  sensor_msgs
-  visualization_msgs
-  tf2_ros
-  tf2
+#  INCLUDE_DIRS include
+#  LIBRARIES human_model
+#  CATKIN_DEPENDS 
+#   roscpp
+#   rospy
+#   std_msgs
+#   geometry_msgs
+#   sensor_msgs
+#   visualization_msgs
+#   tf2_ros
+#   tf2
 #  DEPENDS system_lib
 )
 
@@ -127,8 +127,13 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
+# set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+# set(SRC_DIR     ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
 include_directories(
-  # include/human_model
+  include
+  # include/natnet_ros_cpp 
+  # include/pytorch_kinematics
   ${catkin_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
 )
@@ -147,6 +152,7 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/human_model_node.cpp)
+# add_executable(${PROJECT_NAME} src/natnet_ros.cpp src/internal.cpp src/nn_filter.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -173,7 +179,8 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
-  nodes/humman_joint_states.py
+  nodes/human_joint_states.py
+  nodes/skl_joint_states.py
   nodes/human_ellipsoid.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
@@ -195,8 +202,8 @@ catkin_install_python(PROGRAMS
 ## Mark cpp header files for installation
 # install(DIRECTORY include/${PROJECT_NAME}/
 #   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#   FILES_MATCHING PATTERN "*.h"
-#   PATTERN ".svn" EXCLUDE
+  # FILES_MATCHING PATTERN "*.h"
+  # PATTERN ".svn" EXCLUDE
 # )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
