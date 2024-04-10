@@ -6,12 +6,9 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /human1
-        - /TF1
+        - /human1/Links1
         - /TF1/Tree1
-        - /TF1/Tree1/Hip_mocap1
-        - /ellipsoid_r1
-        - /ellipsoid_r1/Status1
+        - /TF1/Tree1/world1
       Splitter Ratio: 0.5
     Tree Height: 1090
   - Class: rviz/Selection
@@ -244,7 +241,7 @@ Visualization Manager:
           Value: true
       Name: human
       Robot Description: human_description
-      TF Prefix: ""
+      TF Prefix: human
       Update Interval: 0
       Value: true
       Visual Enabled: true
@@ -254,176 +251,190 @@ Visualization Manager:
       Filter (whitelist): ""
       Frame Timeout: 15
       Frames:
-        Ab:
+        All Enabled: false
+        franka_wrist:
+          Value: false
+        fullbody:
           Value: true
-        Ab_f1:
+        hammer:
+          Value: false
+        human/Ab:
           Value: true
-        Ab_f2:
+        human/Ab_f1:
           Value: true
-        All Enabled: true
-        Chest:
+        human/Ab_f2:
           Value: true
-        Chest_f1:
+        human/Chest:
           Value: true
-        Chest_f2:
+        human/Chest_f1:
           Value: true
-        Head:
+        human/Chest_f2:
           Value: true
-        Head_f1:
+        human/Head:
           Value: true
-        Head_f2:
+        human/Head_f1:
           Value: true
-        Hip_mocap:
+        human/Head_f2:
           Value: true
-        LeftForeArm:
+        human/Hip_mocap:
           Value: true
-        LeftForeArm_f1:
+        human/LeftForeArm:
           Value: true
-        LeftForeArm_f2:
+        human/LeftForeArm_f1:
           Value: true
-        LeftHand:
+        human/LeftForeArm_f2:
           Value: true
-        LeftHandCOM:
+        human/LeftHand:
           Value: true
-        LeftHand_f1:
+        human/LeftHandCOM:
           Value: true
-        LeftHand_f2:
+        human/LeftHand_f1:
           Value: true
-        LeftShoulder:
+        human/LeftHand_f2:
           Value: true
-        LeftShoulder_f1:
+        human/LeftShoulder:
           Value: true
-        LeftShoulder_f2:
+        human/LeftShoulder_f1:
           Value: true
-        LeftUpperArm:
+        human/LeftShoulder_f2:
           Value: true
-        LeftUpperArm_f1:
+        human/LeftUpperArm:
           Value: true
-        LeftUpperArm_f2:
+        human/LeftUpperArm_f1:
           Value: true
-        Neck:
+        human/LeftUpperArm_f2:
           Value: true
-        Neck_f1:
+        human/Neck:
           Value: true
-        Neck_f2:
+        human/Neck_f1:
           Value: true
-        RightForeArm:
+        human/Neck_f2:
           Value: true
-        RightForeArm_f1:
+        human/RightForeArm:
           Value: true
-        RightForeArm_f2:
+        human/RightForeArm_f1:
           Value: true
-        RightHand:
+        human/RightForeArm_f2:
           Value: true
-        RightHandCOM:
+        human/RightHand:
           Value: true
-        RightHand_f1:
+        human/RightHandCOM:
           Value: true
-        RightHand_f2:
+        human/RightHand_f1:
           Value: true
-        RightShoulder:
+        human/RightHand_f2:
           Value: true
-        RightShoulder_f1:
+        human/RightShoulder:
           Value: true
-        RightShoulder_f2:
+        human/RightShoulder_f1:
           Value: true
-        RightUpperArm:
+        human/RightShoulder_f2:
           Value: true
-        RightUpperArm_f1:
+        human/RightUpperArm:
           Value: true
-        RightUpperArm_f2:
+        human/RightUpperArm_f1:
           Value: true
-        hip:
+        human/RightUpperArm_f2:
+          Value: true
+        human/hip:
+          Value: true
+        world:
           Value: true
       Marker Alpha: 1
       Marker Scale: 0.5
       Name: TF
-      Show Arrows: true
-      Show Axes: false
-      Show Names: false
+      Show Arrows: false
+      Show Axes: true
+      Show Names: true
       Tree:
-        Hip_mocap:
-          hip:
-            Ab_f1:
-              Ab_f2:
-                Ab:
-                  Chest_f1:
-                    Chest_f2:
-                      Chest:
-                        LeftShoulder_f1:
-                          LeftShoulder_f2:
-                            LeftShoulder:
-                              LeftUpperArm_f1:
-                                LeftUpperArm_f2:
-                                  LeftUpperArm:
-                                    LeftForeArm_f1:
-                                      LeftForeArm_f2:
-                                        LeftForeArm:
-                                          LeftHand_f1:
-                                            LeftHand_f2:
-                                              LeftHand:
-                                                LeftHandCOM:
-                                                  {}
-                        Neck_f1:
-                          Neck_f2:
-                            Neck:
-                              Head_f1:
-                                Head_f2:
-                                  Head:
-                                    {}
-                        RightShoulder_f1:
-                          RightShoulder_f2:
-                            RightShoulder:
-                              RightUpperArm_f1:
-                                RightUpperArm_f2:
-                                  RightUpperArm:
-                                    RightForeArm_f1:
-                                      RightForeArm_f2:
-                                        RightForeArm:
-                                          RightHand_f1:
-                                            RightHand_f2:
-                                              RightHand:
-                                                RightHandCOM:
-                                                  {}
+        world:
+          franka_wrist:
+            {}
+          fullbody:
+            human/Hip_mocap:
+              human/hip:
+                human/Ab_f1:
+                  human/Ab_f2:
+                    human/Ab:
+                      human/Chest_f1:
+                        human/Chest_f2:
+                          human/Chest:
+                            human/LeftShoulder_f1:
+                              human/LeftShoulder_f2:
+                                human/LeftShoulder:
+                                  human/LeftUpperArm_f1:
+                                    human/LeftUpperArm_f2:
+                                      human/LeftUpperArm:
+                                        human/LeftForeArm_f1:
+                                          human/LeftForeArm_f2:
+                                            human/LeftForeArm:
+                                              human/LeftHand_f1:
+                                                human/LeftHand_f2:
+                                                  human/LeftHand:
+                                                    human/LeftHandCOM:
+                                                      {}
+                            human/Neck_f1:
+                              human/Neck_f2:
+                                human/Neck:
+                                  human/Head_f1:
+                                    human/Head_f2:
+                                      human/Head:
+                                        {}
+                            human/RightShoulder_f1:
+                              human/RightShoulder_f2:
+                                human/RightShoulder:
+                                  human/RightUpperArm_f1:
+                                    human/RightUpperArm_f2:
+                                      human/RightUpperArm:
+                                        human/RightForeArm_f1:
+                                          human/RightForeArm_f2:
+                                            human/RightForeArm:
+                                              human/RightHand_f1:
+                                                human/RightHand_f2:
+                                                  human/RightHand:
+                                                    human/RightHandCOM:
+                                                      {}
+          hammer:
+            {}
       Update Interval: 0
       Value: true
     - Class: rviz/Marker
-      Enabled: true
+      Enabled: false
       Marker Topic: /human/vis/ellipsoid_r
       Name: ellipsoid_r
       Namespaces:
         {}
       Queue Size: 100
-      Value: true
+      Value: false
     - Class: rviz/Marker
-      Enabled: true
+      Enabled: false
       Marker Topic: /human/vis/ellipsoid_l
       Name: ellipsoid_l
       Namespaces:
         {}
       Queue Size: 100
-      Value: true
+      Value: false
     - Class: rviz/Marker
-      Enabled: true
+      Enabled: false
       Marker Topic: /human/vis/force_ellipsoid_l
       Name: force_ellip_l
       Namespaces:
         {}
       Queue Size: 100
-      Value: true
+      Value: false
     - Class: rviz/Marker
-      Enabled: true
+      Enabled: false
       Marker Topic: /human/vis/force_ellipsoid_r
       Name: force_ellip_r
       Namespaces:
         {}
       Queue Size: 100
-      Value: true
+      Value: false
   Enabled: true
   Global Options:
     Background Color: 136; 138; 133
     Default Light: true
-    Fixed Frame: Hip_mocap
+    Fixed Frame: world
     Frame Rate: 30
   Name: root
   Tools:
@@ -447,7 +458,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.333777904510498
+      Distance: 4.2110981941223145
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -455,17 +466,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 0.06352247297763824
-        Y: 0.06404128670692444
-        Z: 0.021812545135617256
+        X: -0.08767437189817429
+        Y: 0.22562439739704132
+        Z: 0.5407037138938904
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5503970980644226
+      Pitch: 0.1753973811864853
       Target Frame: <Fixed Frame>
-      Yaw: 5.531772613525391
+      Yaw: 5.731787204742432
     Saved: ~
 Window Geometry:
   Displays:
