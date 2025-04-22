@@ -112,6 +112,7 @@
                 <express_body>-1</express_body>
                 <!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
                 <active>false false false </active>
+                <!-- <active>true true true </active> -->
                 <!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
                 <kp> 1 1 1</kp>
                 <!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
@@ -137,7 +138,7 @@
                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                 <socket_frame>..</socket_frame>
                 <!--Scale factors in X, Y, Z directions respectively.-->
-                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                <scale_factors>0.2 0.2 0.2</scale_factors>
             </FrameGeometry>
             <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
             <attached_geometry/>
@@ -146,6 +147,32 @@
                 <objects/>
                 <groups/>
             </WrapObjectSet>
+            <components>
+                <PhysicalOffsetFrame name="ground_offset">
+                    <!--The geometry used to display the axes of this Frame.-->
+                    <FrameGeometry name="frame_geometry">
+                        <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
+                        <socket_frame>..</socket_frame>
+                        <!--Scale factors in X, Y, Z directions respectively.-->
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
+                    </FrameGeometry>
+                    <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
+                    <socket_parent>..</socket_parent>
+                    <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
+                    <!-- shkey -->
+                    <!-- <translation>-0.5 0 0</translation> -->
+                    <translation>0 0 0</translation>
+                    <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
+                    <orientation>0 0 0</orientation>
+                </PhysicalOffsetFrame>
+                <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
+                <attached_geometry/>
+                <!--Set of wrap objects fixed to this body that GeometryPaths can wrap over.This property used to be a member of Body but was moved up with the introduction of Frames.-->
+                <WrapObjectSet name="wrapobjectset">
+                    <objects/>
+                    <groups/>
+                </WrapObjectSet>
+            </components>
         </Ground>
         <!--Acceleration due to gravity, expressed in ground.-->
         <gravity>0 -9.8066499999999994 0</gravity>
@@ -161,37 +188,52 @@
         <BodySet name="bodyset">
             <objects>
                 <Body name="pelvis">
-                    <!--The geometry used to display the axes of this Frame.-->
-                    <FrameGeometry name="frame_geometry">
-                        <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
-                        <socket_frame>..</socket_frame>
-                        <!--Scale factors in X, Y, Z directions respectively.-->
-                        <!-- shkey -->
-                        <!-- <scale_factors>1 1 1</scale_factors> -->
-                        <!-- default -->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
-                    </FrameGeometry>
-                    <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
-                    <attached_geometry>
-                        <Mesh name="pelvis_geom_3">
-                            <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
-                            <socket_frame>..</socket_frame>
-                            <!--Scale factors in X, Y, Z directions respectively.-->
-                            <scale_factors>1 1 1</scale_factors>
-                            <!--Default appearance attributes for this Geometry-->
-                            <Appearance>
-                                <!--The opacity used to display the geometry between 0:transparent, 1:opaque.-->
-                                <!-- shkey -->
-                                <opacity>0.5</opacity>
-                                <!-- default -->
-                                <!-- <opacity>0.96999999999999997</opacity> -->
-                                <!--The color, (red, green, blue), [0, 1], used to display the geometry. -->
-                                <color>1 1 1</color>
-                            </Appearance>
-                            <!--Name of geometry file.-->
-                            <mesh_file>sacrum.vtp</mesh_file>
-                        </Mesh>
-                    </attached_geometry>
+                    <!--The mass of the body (kg)-->
+                    <mass>11.776999999999999</mass>
+                    <!--The location (Vec3) of the mass center in the body frame.-->
+                    <!-- shkey -->
+                    <mass_center>0 0 0</mass_center>
+                    <!-- default -->
+                    <!-- <mass_center>-0.070699999999999999 0 0</mass_center> -->
+                    <!--The elements of the inertia tensor (Vec6) as [Ixx Iyy Izz Ixy Ixz Iyz] measured about the mass_center and not the body origin.-->
+                    <inertia>0.1028 0.087099999999999997 0.0579 0 0 0</inertia>
+                    <components>
+                        <PhysicalOffsetFrame name="thorax_offset">
+                            <!--The geometry used to display the axes of this Frame.-->
+                            <FrameGeometry name="frame_geometry">
+                                <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
+                                <socket_frame>..</socket_frame>
+                                <!--Scale factors in X, Y, Z directions respectively.-->
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
+                            </FrameGeometry>
+                            <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
+                            <attached_geometry>
+                                <Mesh name="pelvis_geom_3">
+                                    <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
+                                    <socket_frame>..</socket_frame>
+                                    <!--Scale factors in X, Y, Z directions respectively.-->
+                                    <scale_factors>1 1 1</scale_factors>
+                                    <!--Default appearance attributes for this Geometry-->
+                                    <Appearance>
+                                        <!--The opacity used to display the geometry between 0:transparent, 1:opaque.-->
+                                        <!-- shkey -->
+                                        <opacity>0.8</opacity>
+                                        <!-- default -->
+                                        <!-- <opacity>0.96999999999999997</opacity> -->
+                                        <!--The color, (red, green, blue), [0, 1], used to display the geometry. -->
+                                        <color>1 1 1</color>
+                                    </Appearance>
+                                    <!--Name of geometry file.-->
+                                    <mesh_file>sacrum.vtp</mesh_file>
+                                </Mesh>
+                            </attached_geometry>
+                            <!-- shkey -->
+                            <socket_parent>..</socket_parent>
+                            <translation>0.05 0 0</translation>
+                            <orientation>0 0 0</orientation>
+                        </PhysicalOffsetFrame>
+                    </components>
+                    
                     <!--Set of wrap objects fixed to this body that GeometryPaths can wrap over.This property used to be a member of Body but was moved up with the introduction of Frames.-->
                     <WrapObjectSet name="wrapobjectset">
                         <objects>
@@ -478,12 +520,6 @@
                         </objects>
                         <groups/>
                     </WrapObjectSet>
-                    <!--The mass of the body (kg)-->
-                    <mass>11.776999999999999</mass>
-                    <!--The location (Vec3) of the mass center in the body frame.-->
-                    <mass_center>-0.070699999999999999 0 0</mass_center>
-                    <!--The elements of the inertia tensor (Vec6) as [Ixx Iyy Izz Ixy Ixz Iyz] measured about the mass_center and not the body origin.-->
-                    <inertia>0.1028 0.087099999999999997 0.0579 0 0 0</inertia>
                 </Body>
                 <Body name="femur_r">
                     <!--The geometry used to display the axes of this Frame.-->
@@ -491,7 +527,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -708,7 +744,7 @@
                                 <!--The radius of the cylinder.-->
                                 <radius>0.0218</radius>
                                 <!--The length of the cylinder.-->
-                                <length>0.20000000000000001</length>
+                                <length>0.2</length>
                             </WrapCylinder>
                             <WrapCylinder name="AMisch_at_condyles_r">
                                 <!--Whether or not the WrapObject is considered active in computing paths-->
@@ -782,7 +818,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -921,7 +957,7 @@
                                 <!--Whether or not the WrapObject is considered active in computing paths-->
                                 <active>true</active>
                                 <!--Body-fixed Euler angle sequence for the orientation of the WrapObject-->
-                                <xyz_body_rotation>0 -0.20000000000000001 0</xyz_body_rotation>
+                                <xyz_body_rotation>0 -0.2 0</xyz_body_rotation>
                                 <!--Translation of the WrapObject.-->
                                 <translation>-0.002 -0.020500000000000001 0</translation>
                                 <!--The name of quadrant over which the wrap object is active. For example, '+x' or '-y' to set the sidedness of the wrapping.-->
@@ -989,7 +1025,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -1027,7 +1063,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -1065,7 +1101,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -1103,7 +1139,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -1141,7 +1177,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -1358,7 +1394,7 @@
                                 <!--The radius of the cylinder.-->
                                 <radius>0.0218</radius>
                                 <!--The length of the cylinder.-->
-                                <length>0.20000000000000001</length>
+                                <length>0.2</length>
                             </WrapCylinder>
                             <WrapCylinder name="AMisch_at_condyles_l">
                                 <!--Whether or not the WrapObject is considered active in computing paths-->
@@ -1432,7 +1468,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -1571,7 +1607,7 @@
                                 <!--Whether or not the WrapObject is considered active in computing paths-->
                                 <active>true</active>
                                 <!--Body-fixed Euler angle sequence for the orientation of the WrapObject-->
-                                <xyz_body_rotation>0 0.20000000000000001 0</xyz_body_rotation>
+                                <xyz_body_rotation>0 0.2 0</xyz_body_rotation>
                                 <!--Translation of the WrapObject.-->
                                 <translation>-0.002 -0.020500000000000001 0</translation>
                                 <!--The name of quadrant over which the wrap object is active. For example, '+x' or '-y' to set the sidedness of the wrapping.-->
@@ -1639,7 +1675,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -1677,7 +1713,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -1715,7 +1751,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -1753,7 +1789,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -1791,16 +1827,16 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <components>
-                        <PhysicalOffsetFrame name="thorax_offset">
+                        <PhysicalOffsetFrame name="head_offset">
                             <!--The geometry used to display the axes of this Frame.-->
                             <FrameGeometry name="frame_geometry">
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                             <attached_geometry>
@@ -1814,7 +1850,8 @@
                                         <!--Flag indicating whether the associated Geometry is visible or hidden.-->
                                         <visible>true</visible>
                                         <!--The opacity used to display the geometry between 0:transparent, 1:opaque.-->
-                                        <opacity>0.96999999999999997</opacity>
+                                        <opacity>0.5</opacity>
+                                        <!-- <opacity>0.96999999999999997</opacity> -->
                                         <!--The color, (red, green, blue), [0, 1], used to display the geometry. -->
                                         <color>1 1 1</color>
                                     </Appearance>
@@ -1825,7 +1862,7 @@
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>..</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
-                            <translation>0.02 -0.5 0</translation>
+                            <translation>0.02 -0.55 0</translation>
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <orientation>0 0 0</orientation>
                         </PhysicalOffsetFrame>
@@ -1843,6 +1880,44 @@
                     <!--The elements of the inertia tensor (Vec6) as [Ixx Iyy Izz Ixy Ixz Iyz] measured about the mass_center and not the body origin.-->
                     <inertia>0.015686700000000001 0.0145504 0.018588199999999999 0 0 0</inertia>
                 </Body>
+                <Body name="neck">
+                    <!--The mass of the body (kg)-->
+                    <mass>5.0</mass>
+                    <!--The location (Vec3) of the mass center in the body frame.-->
+                    <mass_center>0 0 0</mass_center>
+                    <!--The elements of the inertia tensor (Vec6) as [Ixx Iyy Izz Ixy Ixz Iyz] measured about the mass_center and not the body origin.-->
+                    <inertia>1 1 1 0 0 0</inertia>
+                    <!--List of components that this component owns and serializes.-->
+                    <components>
+                        <PhysicalOffsetFrame name="neck_offset">
+                            <!--The geometry used to display the axes of this Frame.-->
+                            <FrameGeometry name="frame_geometry">
+                                <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
+                                <socket_frame>..</socket_frame>
+                                <!--Scale factors in X, Y, Z directions respectively.-->
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
+                            </FrameGeometry>
+                            <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
+                            <attached_geometry>
+                                <Mesh name="neck_mesh">
+                                    <socket_frame>..</socket_frame>
+                                    <scale_factors>1 1 1</scale_factors>
+                                    <Appearance>
+                                        <opacity>0.7</opacity>
+                                        <color>1 1 1</color>
+                                    </Appearance>
+                                    <mesh_file>cervical_spine_alone.vtp</mesh_file>
+                                </Mesh>
+                            </attached_geometry>
+                            <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
+                            <socket_parent>..</socket_parent>
+                            <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
+                            <translation>0.06 -0.4 0</translation>
+                            <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
+                            <orientation>0 0 0.1</orientation>
+                        </PhysicalOffsetFrame>
+                    </components>
+                </Body>
                 <Body name="lumbar_body">
                     <!--The mass of the body (kg)-->
                     <mass>5.0</mass>
@@ -1858,7 +1933,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                             <attached_geometry>
@@ -1867,7 +1942,11 @@
                                     <socket_frame>..</socket_frame>
                                     <scale_factors>1 1 1</scale_factors>
                                     <Appearance>
-                                        <opacity>0.96999999999999997</opacity>
+                                        <!-- shkey -->
+                                        <opacity>0.5</opacity>
+                                        <!-- <color>0.5 0.8 0.8</color> -->
+                                        <!-- default -->
+                                        <!-- <opacity>0.96999999999999997</opacity> -->
                                         <color>1 1 1</color>
                                     </Appearance>
                                     <mesh_file>lumbar_spine.vtp</mesh_file>
@@ -1876,7 +1955,11 @@
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>..</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
-                            <translation>0 0 0</translation>
+                            <!-- shkey -->
+                            <translation>0 0.13 0</translation>
+                            <!-- <translation>0 0.05 0</translation> -->
+                            <!-- default -->
+                            <!-- <translation>0 0 0</translation> -->
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <orientation>0 0 0</orientation>
                         </PhysicalOffsetFrame>
@@ -1897,7 +1980,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                             <attached_geometry>
@@ -1905,7 +1988,11 @@
                                     <socket_frame>..</socket_frame>
                                     <scale_factors>1 1 1</scale_factors>
                                     <Appearance>
-                                        <opacity>0.96999999999999997</opacity>
+                                        <!-- shkey -->
+                                        <opacity>0.5</opacity>
+                                        <!-- <color>0.8 0.5 0.8</color> -->
+                                        <!-- default -->
+                                        <!-- <opacity>0.96999999999999997</opacity> -->
                                         <color>1 1 1</color>
                                     </Appearance>
                                     <mesh_file>thorax.vtp</mesh_file>
@@ -1914,56 +2001,48 @@
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>..</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
-                            <translation>0 0 0</translation>
+                            <translation>0 0.19 0</translation>
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <orientation>0 0 0</orientation>
                         </PhysicalOffsetFrame>
                     </components>
                 </Body>
                 <Body name="scapula_r">
-                    <!--List of components that this component owns and serializes.-->
                     <components>
-                        <PhysicalOffsetFrame name="cp_in_scapula_r">
+                        <PhysicalOffsetFrame name="scapula_r_offset">
                             <!--The geometry used to display the axes of this Frame.-->
                             <FrameGeometry name="frame_geometry">
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
-                            <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
+                            <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
+                            <attached_geometry>
+                                <Mesh name="scapula_r_geom_1">
+                                    <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
+                                    <socket_frame>..</socket_frame>
+                                    <!--Scale factors in X, Y, Z directions respectively.-->
+                                    <scale_factors>1 1 1</scale_factors>
+                                    <!--Default appearance attributes for this Geometry-->
+                                    <Appearance>
+                                        <!--Flag indicating whether the associated Geometry is visible or hidden.-->
+                                        <visible>true</visible>
+                                        <!--The opacity used to display the geometry between 0:transparent, 1:opaque.-->
+                                        <opacity>1</opacity>
+                                        <!--The color, (red, green, blue), [0, 1], used to display the geometry. -->
+                                        <color>1 1 1</color>
+                                    </Appearance>
+                                    <!--Name of geometry file.-->
+                                    <mesh_file>scapula.vtp</mesh_file>
+                                </Mesh>
+                            </attached_geometry>
+                            <!-- shkey -->
                             <socket_parent>..</socket_parent>
-                            <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
-                            <translation>0 0 0 </translation>
+                            <translation>0.04 0.04 0.13</translation>
+                            <orientation>0 0 0</orientation>
                         </PhysicalOffsetFrame>
                     </components>
-                    <!--The geometry used to display the axes of this Frame.-->
-                    <FrameGeometry name="frame_geometry">
-                        <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
-                        <socket_frame>..</socket_frame>
-                        <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
-                    </FrameGeometry>
-                    <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
-                    <attached_geometry>
-                        <Mesh name="scapula_r_geom_1">
-                            <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
-                            <socket_frame>..</socket_frame>
-                            <!--Scale factors in X, Y, Z directions respectively.-->
-                            <scale_factors>1 1 1</scale_factors>
-                            <!--Default appearance attributes for this Geometry-->
-                            <Appearance>
-                                <!--Flag indicating whether the associated Geometry is visible or hidden.-->
-                                <visible>true</visible>
-                                <!--The opacity used to display the geometry between 0:transparent, 1:opaque.-->
-                                <opacity>1</opacity>
-                                <!--The color, (red, green, blue), [0, 1], used to display the geometry. -->
-                                <color>1 1 1</color>
-                            </Appearance>
-                            <!--Name of geometry file.-->
-                            <mesh_file>scapula.vtp</mesh_file>
-                        </Mesh>
-                    </attached_geometry>
                     <!--Set of wrap objects fixed to this body that GeometryPaths can wrap over.This property used to be a member of Body but was moved up with the introduction of Frames.-->
                     <WrapObjectSet name="wrapobjectset">
                         <objects>
@@ -2124,41 +2203,34 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
-                            <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
+                            <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
+                            <attached_geometry>
+                                <Mesh name="scapula_l_geom_1">
+                                    <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
+                                    <socket_frame>..</socket_frame>
+                                    <!--Scale factors in X, Y, Z directions respectively.-->
+                                    <scale_factors>1 1 1</scale_factors>
+                                    <!--Default appearance attributes for this Geometry-->
+                                    <Appearance>
+                                        <!--Flag indicating whether the associated Geometry is visible or hidden.-->
+                                        <visible>true</visible>
+                                        <!--The opacity used to display the geometry between 0:transparent, 1:opaque.-->
+                                        <opacity>1</opacity>
+                                        <!--The color, (red, green, blue), [0, 1], used to display the geometry. -->
+                                        <color>1 1 1</color>
+                                    </Appearance>
+                                    <!--Name of geometry file.-->
+                                    <mesh_file>scapula_l.vtp</mesh_file>
+                                </Mesh>
+                            </attached_geometry>
+                            <!-- shkey -->
                             <socket_parent>..</socket_parent>
-                            <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
-                            <translation>0 0 0</translation>
+                            <translation>0.04 0.04 -0.13</translation>
+                            <orientation>0 0 0</orientation>
                         </PhysicalOffsetFrame>
                     </components>
-                    <!--The geometry used to display the axes of this Frame.-->
-                    <FrameGeometry name="frame_geometry">
-                        <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
-                        <socket_frame>..</socket_frame>
-                        <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
-                    </FrameGeometry>
-                    <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
-                    <attached_geometry>
-                        <Mesh name="scapula_l_geom_1">
-                            <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
-                            <socket_frame>..</socket_frame>
-                            <!--Scale factors in X, Y, Z directions respectively.-->
-                            <scale_factors>1 1 1</scale_factors>
-                            <!--Default appearance attributes for this Geometry-->
-                            <Appearance>
-                                <!--Flag indicating whether the associated Geometry is visible or hidden.-->
-                                <visible>true</visible>
-                                <!--The opacity used to display the geometry between 0:transparent, 1:opaque.-->
-                                <opacity>1</opacity>
-                                <!--The color, (red, green, blue), [0, 1], used to display the geometry. -->
-                                <color>1 1 1</color>
-                            </Appearance>
-                            <!--Name of geometry file.-->
-                            <mesh_file>scapula_l.vtp</mesh_file>
-                        </Mesh>
-                    </attached_geometry>
                     <!--Set of wrap objects fixed to this body that GeometryPaths can wrap over.This property used to be a member of Body but was moved up with the introduction of Frames.-->
                     <WrapObjectSet name="wrapobjectset">
                         <objects>
@@ -2316,7 +2388,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -2598,7 +2670,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -2880,7 +2952,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -2947,7 +3019,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -3014,7 +3086,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -3137,7 +3209,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -3263,7 +3335,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                             <attached_geometry>
@@ -3296,7 +3368,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -3473,7 +3545,7 @@
                         <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                         <socket_frame>..</socket_frame>
                         <!--Scale factors in X, Y, Z directions respectively.-->
-                        <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                        <scale_factors>0.2 0.2 0.2</scale_factors>
                     </FrameGeometry>
                     <!--List of geometry attached to this Frame. Note, the geometry are treated as fixed to the frame and they share the transform of the frame when visualized-->
                     <attached_geometry>
@@ -3762,11 +3834,14 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/ground</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
+                            <!-- shkey -->
+                            <!-- <translation>-0.05 -0.04938 0</translation> -->
+                            <!-- default -->
                             <translation>0 0 0</translation>
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <!-- shkey -->
@@ -3781,19 +3856,16 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <!-- <scale_factors>1 1 1</scale_factors> -->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/pelvis</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
                             <!-- shkey -->
-                            <translation>-0.05 0 0</translation>
-                            <!-- <translation>-0.04 -0.03 0</translation> -->
-                            <!-- <translation>-0.04 0.07 0</translation> -->
+                            <!-- <translation>-0.05 -0.04938 0</translation> -->
                             <!-- <translation>-0.1007 0.061500000000000003 0</translation> -->
                             <!-- default -->
-                            <!-- <translation>0 0 0</translation> -->
+                            <translation>0 0 0</translation>
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <!-- shkey: This fixed the rotation sequence as well -->
                             <!-- <orientation>0 1.57079632679 0 </orientation> -->
@@ -3933,12 +4005,15 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/pelvis</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
-                            <translation>-0.056276 -0.078490000000000004 0.077259999999999995</translation>
+                            <!-- shkey -->
+                            <translation>0 -0.07849 0.07726</translation>
+                            <!-- default -->
+                            <!-- <translation>-0.056276 -0.078490000000000004 0.077259999999999995</translation> -->
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <orientation>0 0 0</orientation>
                         </PhysicalOffsetFrame>
@@ -3948,7 +4023,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/femur_r</socket_parent>
@@ -4056,7 +4131,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/femur_r</socket_parent>
@@ -4071,7 +4146,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/tibia_r</socket_parent>
@@ -4183,7 +4258,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/femur_r</socket_parent>
@@ -4198,7 +4273,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/patella_r</socket_parent>
@@ -4309,7 +4384,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/tibia_r</socket_parent>
@@ -4324,7 +4399,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/talus_r</socket_parent>
@@ -4367,7 +4442,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/talus_r</socket_parent>
@@ -4382,7 +4457,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/calcn_r</socket_parent>
@@ -4425,7 +4500,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/calcn_r</socket_parent>
@@ -4440,7 +4515,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/toes_r</socket_parent>
@@ -4515,12 +4590,15 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/pelvis</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
-                            <translation>-0.056276 -0.078490000000000004 -0.077259999999999995</translation>
+                            <!-- shkey -->
+                            <translation>0 -0.07849 -0.07726</translation>
+                            <!-- default -->
+                            <!-- <translation>-0.056276 -0.078490000000000004 -0.077259999999999995</translation> -->
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <orientation>0 0 0</orientation>
                         </PhysicalOffsetFrame>
@@ -4530,7 +4608,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/femur_l</socket_parent>
@@ -4638,7 +4716,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/femur_l</socket_parent>
@@ -4653,7 +4731,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/tibia_l</socket_parent>
@@ -4765,7 +4843,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/femur_l</socket_parent>
@@ -4780,7 +4858,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/patella_l</socket_parent>
@@ -4891,7 +4969,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/tibia_l</socket_parent>
@@ -4906,7 +4984,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/talus_l</socket_parent>
@@ -4949,7 +5027,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/talus_l</socket_parent>
@@ -4964,7 +5042,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/calcn_l</socket_parent>
@@ -5007,7 +5085,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/calcn_l</socket_parent>
@@ -5022,7 +5100,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/toes_l</socket_parent>
@@ -5038,7 +5116,11 @@
                     <socket_parent_frame>pelvis_offset</socket_parent_frame>
                     <!--Path to a Component that satisfies the Socket 'child_frame' of type PhysicalFrame (description: The child frame for the joint.).-->
                     <socket_child_frame>lumbar_offset</socket_child_frame>
-                    <length>0.1</length>
+                    <!-- shkey -->
+                    <length>0.04938</length>
+                    <!-- <length>0.18068</length> -->
+                    <!-- default -->
+                    <!-- <length>0.1</length> -->
                     <!-- shkey -->
                     <neutral_angle_x_z_y>0 0 0</neutral_angle_x_z_y>
                     <!-- <neutral_angle_z_x_y>0 0 0</neutral_angle_z_x_y> -->
@@ -5104,20 +5186,22 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/pelvis</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
                             <!-- shkey -->
-                            <translation>-0.05 0.0 0</translation>
-                            <!-- <translation>-0.0 0.0 0</translation> -->
-                            <!-- <translation>0 -0.03 0</translation> -->
+                            <translation>0 0 0</translation>
+                            <!-- <translation>-0.05 -0.04938 0</translation> -->
+                            <!-- <translation>-0.05 -0.18068 0</translation> -->
+                            <!-- <translation>-0.05 0.18068 0</translation> -->
+                            <!-- <translation>-0.05 -0 0</translation> -->
                             <!-- default -->
                             <!-- <translation>-0.1007 0.061500000000000003 0</translation> -->
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <!-- shkey -->
-                            <!-- <orientation> 0 1.57 0 </orientation> -->
+                            <!-- <orientation> 0 1.5707950000000199 0 </orientation> -->
                             <orientation>0 0 0</orientation>
                             <!-- <orientation>0 0 -0.4</orientation> -->
                             <!-- default -->
@@ -5129,19 +5213,19 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/lumbar_body</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
                             <!-- shkey -->
-                            <!-- <translation>0 0.02 0</translation> -->
-                            <!-- <translation>-0.1007 0.061500000000000003 0</translation> -->
+                            <!-- <translation>0 -0.04938 0</translation> -->
+                            <!-- <translation>0 -0.18068 0</translation> -->
                             <!-- default -->
                             <translation>0 0 0</translation>
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <!-- shkey -->
-                            <!-- <orientation> 0 1.57 0</orientation> -->
+                            <!-- <orientation> 0 1.5707950000000199 0</orientation> -->
                             <!-- <orientation>0 0 0.05</orientation> -->
                             <!-- default -->
                             <orientation>0 0 0</orientation>
@@ -5153,7 +5237,11 @@
                     <socket_parent_frame>thoracic_lumbar_offset</socket_parent_frame>
                     <!--Path to a Component that satisfies the Socket 'child_frame' of type PhysicalFrame (description: The child frame for the joint.).-->
                     <socket_child_frame>thoracic_thorax_offset</socket_child_frame>
-                    <length>0.3</length>
+                    <!-- shkey -->
+                    <!-- <length>0.2079</length> -->
+                    <length>0.18068</length>
+                    <!-- default -->
+                    <!-- <length>0.3</length> -->
                     <!-- shkey -->
                     <neutral_angle_x_z_y>0 0 0</neutral_angle_x_z_y>
                     <!-- default -->
@@ -5217,15 +5305,16 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/lumbar_body</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
                             <!-- shkey -->
-                            <translation>0 0 0</translation>
+                            <!-- <translation>0 0.18068 0</translation> -->
+                            <!-- <translation>0 0.2079 0</translation> -->
                             <!-- default -->
-                            <!-- <translation>0 0 0</translation> -->
+                            <translation>0 0 0</translation>
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <!-- shkey -->
                             <!-- <orientation>0 0 0.1</orientation> -->
@@ -5238,13 +5327,13 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/thorax</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
                             <!-- shkey -->
-                            <!-- <translation>-0.05 0 0</translation> -->
+                            <!-- <translation>0 -0.2079 0.2</translation> -->
                             <!-- default -->
                             <translation>0 0 0</translation>
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
@@ -5254,49 +5343,129 @@
                             <!-- <orientation>0 0 -0.3</orientation> -->
                         </PhysicalOffsetFrame>
                     </frames>
-                    <!--Defines how the child body moves with respect to the parent as a function of the generalized coordinates.-->
-                    <SpatialTransform>
-                        <!--3 Axes for rotations are listed first.-->
-                        <TransformAxis name="rotation2">
-                            <!--Names of the coordinates that serve as the independent variables         of the transform function.-->
-                            <coordinates>thorax_bending</coordinates>
-                            <!--Rotation or translation axis for the transform.-->
-                            <axis>0 0 1</axis>
-                            <!--Transform function of the generalized coordinates used to        represent the amount of displacement along a specified axis.-->
-                            <LinearFunction name="function">
-                                <coefficients> 1 0</coefficients>
-                            </LinearFunction>
-                        </TransformAxis>
-                        <TransformAxis name="rotation1">
-                            <!--Names of the coordinates that serve as the independent variables         of the transform function.-->
-                            <coordinates>thorax_extension</coordinates>
-                            <!--Rotation or translation axis for the transform.-->
-                            <axis>1 0 0</axis>
-                            <!--Transform function of the generalized coordinates used to        represent the amount of displacement along a specified axis.-->
-                            <LinearFunction name="function">
-                                <coefficients> 1 0</coefficients>
-                            </LinearFunction>
-                        </TransformAxis>
-                        
-                        <TransformAxis name="rotation3">
-                            <!--Names of the coordinates that serve as the independent variables         of the transform function.-->
-                            <coordinates>thorax_twist</coordinates>
-                            <!--Rotation or translation axis for the transform.-->
-                            <axis>0 1 0</axis>
-                            <!--Transform function of the generalized coordinates used to        represent the amount of displacement along a specified axis.-->
-                            <LinearFunction name="function">
-                                <coefficients> 1 0</coefficients>
-                            </LinearFunction>
-                        </TransformAxis>
-                    </SpatialTransform>
                 </ConstantCurvatureJoint>
                 <ConstantCurvatureJoint name="neck">
                     <!--Path to a Component that satisfies the Socket 'parent_frame' of type PhysicalFrame (description: The parent frame for the joint.).-->
                     <socket_parent_frame>torso_offset</socket_parent_frame>
                     <!--Path to a Component that satisfies the Socket 'child_frame' of type PhysicalFrame (description: The child frame for the joint.).-->
                     <socket_child_frame>neck_offset</socket_child_frame>
-                    <length>0.1</length>
-                    <neutral_angle_x_z_y>0 0.2 0</neutral_angle_x_z_y>
+                    <!-- shkey -->
+                    <length>0.2079</length>
+                    <!-- <length>0.3279</length> -->
+                    <!-- default -->
+                    <!-- <length>0.12</length> -->
+                    <!-- shkey -->
+                    <neutral_angle_x_z_y>0 0 0</neutral_angle_x_z_y>
+                    <!-- default -->
+                    <!-- <neutral_angle_x_z_y>0 0.2 0</neutral_angle_x_z_y> -->
+                    <!--List containing the generalized coordinates (q's) that parameterize this joint.-->
+                    <coordinates>
+                        <Coordinate name="neck_bending">
+                            <!--The value of this coordinate before any value has been set. Rotational coordinate value is in radians and Translational in meters.-->
+                            <default_value>0</default_value>
+                            <!--The speed value of this coordinate before any value has been set. Rotational coordinate value is in rad/s and Translational in m/s.-->
+                            <default_speed_value>0</default_speed_value>
+                            <!--The minimum and maximum values that the coordinate can range between. Rotational coordinate range in radians and Translational in meters.-->
+                            <range>-1.01 1.01</range>
+                            <!--Flag indicating whether or not the values of the coordinates should be limited to the range, above.-->
+                            <clamped>true</clamped>
+                            <!--Flag indicating whether or not the values of the coordinates should be constrained to the current (e.g. default) value, above.-->
+                            <locked>false</locked>
+                            <!--If specified, the coordinate can be prescribed by a function of time. It can be any OpenSim Function with valid second order derivatives.-->
+                            <prescribed_function/>
+                            <!--Flag indicating whether or not the values of the coordinates should be prescribed according to the function above. It is ignored if the no prescribed function is specified.-->
+                            <prescribed>false</prescribed>
+                        </Coordinate>
+                        <Coordinate name="neck_extension">
+                            <!--The value of this coordinate before any value has been set. Rotational coordinate value is in radians and Translational in meters.-->
+                            <default_value>0</default_value>
+                            <!--The speed value of this coordinate before any value has been set. Rotational coordinate value is in rad/s and Translational in m/s.-->
+                            <default_speed_value>0</default_speed_value>
+                            <!--The minimum and maximum values that the coordinate can range between. Rotational coordinate range in radians and Translational in meters.-->
+                            <range>-1.09 1.09</range>
+                            <!--Flag indicating whether or not the values of the coordinates should be limited to the range, above.-->
+                            <clamped>true</clamped>
+                            <!--Flag indicating whether or not the values of the coordinates should be constrained to the current (e.g. default) value, above.-->
+                            <locked>false</locked>
+                            <!--If specified, the coordinate can be prescribed by a function of time. It can be any OpenSim Function with valid second order derivatives.-->
+                            <prescribed_function/>
+                            <!--Flag indicating whether or not the values of the coordinates should be prescribed according to the function above. It is ignored if the no prescribed function is specified.-->
+                            <prescribed>false</prescribed>
+                        </Coordinate>
+                        <Coordinate name="neck_twist">
+                            <!--The value of this coordinate before any value has been set. Rotational coordinate value is in radians and Translational in meters.-->
+                            <default_value>0</default_value>
+                            <!--The speed value of this coordinate before any value has been set. Rotational coordinate value is in rad/s and Translational in m/s.-->
+                            <default_speed_value>0</default_speed_value>
+                            <!--The minimum and maximum values that the coordinate can range between. Rotational coordinate range in radians and Translational in meters.-->
+                            <range>-1.44 1.44</range>
+                            <!--Flag indicating whether or not the values of the coordinates should be limited to the range, above.-->
+                            <clamped>true</clamped>
+                            <!--Flag indicating whether or not the values of the coordinates should be constrained to the current (e.g. default) value, above.-->
+                            <locked>false</locked>
+                            <!--If specified, the coordinate can be prescribed by a function of time. It can be any OpenSim Function with valid second order derivatives.-->
+                            <prescribed_function/>
+                            <!--Flag indicating whether or not the values of the coordinates should be prescribed according to the function above. It is ignored if the no prescribed function is specified.-->
+                            <prescribed>false</prescribed>
+                        </Coordinate>
+                    </coordinates>
+                    <!--Physical offset frames owned by the Joint that are typically used to satisfy the owning Joint's parent and child frame connections (sockets). PhysicalOffsetFrames are often used to describe the fixed transformation from a Body's origin to another location of interest on the Body (e.g., the joint center). When the joint is deleted, so are the PhysicalOffsetFrame components in this list.-->
+                    <frames>
+                        <PhysicalOffsetFrame name="torso_offset">
+                            <!--The geometry used to display the axes of this Frame.-->
+                            <FrameGeometry name="frame_geometry">
+                                <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
+                                <socket_frame>..</socket_frame>
+                                <!--Scale factors in X, Y, Z directions respectively.-->
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
+                            </FrameGeometry>
+                            <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
+                            <socket_parent>/bodyset/thorax</socket_parent>
+                            <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
+                            <!-- shkey -->
+                            <!-- <translation>0 0.2079 0</translation> -->
+                            <!-- default -->
+                            <translation>0 0 0</translation>
+                            <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
+                            <!-- shkey -->
+                            <orientation>0 0 0</orientation>
+                            <!-- default -->
+                            <!-- <orientation>0 0 -0.3</orientation> -->
+                        </PhysicalOffsetFrame>
+                        <PhysicalOffsetFrame name="neck_offset">
+                            <!--The geometry used to display the axes of this Frame.-->
+                            <FrameGeometry name="frame_geometry">
+                                <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
+                                <socket_frame>..</socket_frame>
+                                <!--Scale factors in X, Y, Z directions respectively.-->
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
+                            </FrameGeometry>
+                            <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
+                            <socket_parent>/bodyset/neck</socket_parent>
+                            <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
+                            <!-- shkey -->
+                            <!-- <translation>0 0.2079 0</translation> -->
+                            <!-- <translation>0 -0.1 0</translation> -->
+                            <!-- default -->
+                            <translation>0 0 0</translation>
+                            <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
+                            <orientation>0 0 0</orientation>
+                        </PhysicalOffsetFrame>
+                    </frames>
+                </ConstantCurvatureJoint>
+                <ConstantCurvatureJoint name="head">
+                    <!--Path to a Component that satisfies the Socket 'parent_frame' of type PhysicalFrame (description: The parent frame for the joint.).-->
+                    <socket_parent_frame>neck_offset</socket_parent_frame>
+                    <!--Path to a Component that satisfies the Socket 'child_frame' of type PhysicalFrame (description: The child frame for the joint.).-->
+                    <socket_child_frame>head_offset</socket_child_frame>
+                    <!-- shkey -->
+                    <!-- <length>0.02</length> -->
+                    <!-- default -->
+                    <length>0.1174</length>
+                    <!-- shkey -->
+                    <neutral_angle_x_z_y>0 0 0</neutral_angle_x_z_y>
+                    <!-- default -->
+                    <!-- <neutral_angle_x_z_y>0 0.2 0</neutral_angle_x_z_y> -->
                     <!--List containing the generalized coordinates (q's) that parameterize this joint.-->
                     <coordinates>
                         <Coordinate name="head_bending">
@@ -5350,37 +5519,41 @@
                     </coordinates>
                     <!--Physical offset frames owned by the Joint that are typically used to satisfy the owning Joint's parent and child frame connections (sockets). PhysicalOffsetFrames are often used to describe the fixed transformation from a Body's origin to another location of interest on the Body (e.g., the joint center). When the joint is deleted, so are the PhysicalOffsetFrame components in this list.-->
                     <frames>
-                        <PhysicalOffsetFrame name="torso_offset">
-                            <!--The geometry used to display the axes of this Frame.-->
-                            <FrameGeometry name="frame_geometry">
-                                <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
-                                <socket_frame>..</socket_frame>
-                                <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
-                            </FrameGeometry>
-                            <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
-                            <socket_parent>/bodyset/thorax</socket_parent>
-                            <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
-                            <translation>0 0 0</translation>
-                            <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
-                            <!-- shkey -->
-                            <orientation>0 0 -0.1</orientation>
-                            <!-- default -->
-                            <!-- <orientation>0 0 -0.3</orientation> -->
-                        </PhysicalOffsetFrame>
                         <PhysicalOffsetFrame name="neck_offset">
                             <!--The geometry used to display the axes of this Frame.-->
                             <FrameGeometry name="frame_geometry">
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
+                            </FrameGeometry>
+                            <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
+                            <socket_parent>/bodyset/neck</socket_parent>
+                            <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
+                            <!-- shkey -->
+                            <!-- <translation>0 0.05 0</translation> -->
+                            <!-- default -->
+                            <translation>0 0 0</translation>
+                            <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
+                            <!-- shkey -->
+                            <orientation>0 0 0</orientation>
+                            <!-- <orientation>0 0 -0.2</orientation> -->
+                            <!-- default -->
+                            <!-- <orientation>0 0 -0.3</orientation> -->
+                        </PhysicalOffsetFrame>
+                        <PhysicalOffsetFrame name="head_offset">
+                            <!--The geometry used to display the axes of this Frame.-->
+                            <FrameGeometry name="frame_geometry">
+                                <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
+                                <socket_frame>..</socket_frame>
+                                <!--Scale factors in X, Y, Z directions respectively.-->
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/head</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
                             <!-- shkey -->
-                            <!-- <translation>0 0.02 0</translation> -->
+                            <!-- <translation>0 -0.2 0</translation> -->
                             <!-- default -->
                             <translation>0 0 0</translation>
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
@@ -5452,19 +5625,20 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/thorax</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
                             <!-- shkey -->
-                            <!-- <translation>-0.0415 0 -0.07188</translation> -->
-                            <translation>0 0 -0.0523</translation>
+                            <!-- <translation>0 -0.04517 -0.0523</translation> -->
+                            <!-- <translation>0 -0.0 -0</translation> -->
+                            <translation>0 0.16273 -0.0523</translation>
                             <!-- default -->
                             <!-- <translation>0.03 -0.03 0.070285569000000006</translation> -->
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <!-- shkey -->
-                            <!-- <orientation> 0 1.57 0 </orientation> -->
+                            <!-- <orientation> 0 1.5707950000000199 0 </orientation> -->
                             <!-- default -->
                             <orientation>0 0 0</orientation>
                             <!-- <orientation>0 -0.97 0</orientation> -->
@@ -5476,20 +5650,21 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/scapula_r</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
                             <!-- shkey -->
-                            <!-- <translation>-0.0 0.0 -0.16</translation> -->
-                            <translation>-0.0 0.0 -0.13126</translation>
+                            <translation>-0.0 0.0 -0</translation>
+                            <!-- <translation>-0.04 -0.0 -0.13126</translation> -->
+                            <!-- <translation>-0.0 -0.02 -0.13126</translation> -->
                             <!-- <translation>-0.03 0 -0.12</translation> -->
                             <!-- default -->
                             <!-- <translation>-0.059819622317908099 -0.039041599498770452 -0.055980238178321401</translation> -->
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <!-- shkey -->
-                            <!-- <orientation>0 -1.57 0 </orientation> -->
+                            <!-- <orientation>0 -1.5707950000000199 0 </orientation> -->
                             <orientation>0 0 0</orientation>
                             <!-- default -->
                             <!-- <orientation>-0.5181 -1.1415999999999999 -0.28539999999999999</orientation> -->
@@ -5565,18 +5740,19 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/thorax</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
                             <!-- shkey -->
-                            <translation>-0.0 0 0.0523</translation>
+                            <!-- <translation>0 -0.04517 0.0523</translation> -->
+                            <translation>-0.0 0.16273 0.0523</translation>
                             <!-- default -->
                             <!-- <translation>0.03 0.03 -0.070285569000000006</translation> -->
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <!-- shkey -->
-                            <!-- <orientation>0 0 0</orientation> -->
+                            <!-- <orientation>0 -0.5 3.1415926535897931</orientation> -->
                             <!-- default -->
                             <!-- <orientation>0 0.97 3.1415926535897931</orientation> -->
                             <orientation>0 0 3.1415926535897931</orientation>
@@ -5587,18 +5763,19 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/scapula_l</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
                             <!-- shkey -->
-                            <translation>-0.0 0 0.13126</translation>
+                            <translation>0 0 0</translation>
+                            <!-- <translation>-0.04 -0.0 0.13126</translation> -->
                             <!-- default -->
                             <!-- <translation>-0.059819622317908099 -0.039041599498770452 0.055980238178321401</translation> -->
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <!-- shkey -->
-                            <!-- <orientation>0 0 2.8561926535897935</orientation> -->
+                            <!-- <orientation>0 0.5 3.1415926535897931</orientation> -->
                             <orientation>0 0 3.1415926535897931</orientation>
                             <!-- <orientation>0 0 0</orientation> -->
                             <!-- default -->
@@ -5641,9 +5818,9 @@
                             <default_speed_value>1</default_speed_value>
                             <!--The minimum and maximum values that the coordinate can range between. Rotational coordinate range in radians and Translational in meters.-->
                             <!-- shkey -->
-                            <!-- <range>-3.1415926500000002 1.57</range> -->
+                            <!-- <range>-3.1415926500000002 1.5707950000000199</range> -->
                             <!-- default -->
-                            <range>-1.5 3.1415926500000002</range>
+                            <range>-1.5707950000000199 3.1415926500000002</range>
                             <!--Flag indicating whether or not the values of the coordinates should be limited to the range, above.-->
                             <clamped>true</clamped>
                             <!--Flag indicating whether or not the values of the coordinates should be constrained to the current (e.g. default) value, above.-->
@@ -5679,18 +5856,19 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/scapula_r</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
                             <!-- shkey -->
-                            <translation>0 0 0</translation>
+                            <translation>0 0.0 0.13126</translation>
+                            <!-- <translation>0 -0.04 0</translation> -->
                             <!-- default -->
                             <!-- <translation>-0.0095499447834722345 -0.034001364113029092 0.008996821850851211</translation> -->
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <!-- shkey -->
-                            <orientation>-1.57 0 0</orientation>
+                            <orientation>-1.5707950000000199 0 0</orientation>
                             <!-- default -->
                             <!-- <orientation>0 0 0</orientation> -->
                         </PhysicalOffsetFrame>
@@ -5700,7 +5878,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/humerus_r</socket_parent>
@@ -5806,7 +5984,7 @@
                             <default_speed_value>1</default_speed_value>
                             <!--The minimum and maximum values that the coordinate can range between. Rotational coordinate range in radians and Translational in meters.-->
                             <!-- shkey -->
-                            <!-- <range>-3.1415926500000002 1.57</range> -->
+                            <!-- <range>-3.1415926500000002 1.5707950000000199</range> -->
                             <!-- default -->
                             <range>-1.5 3.1415926500000002</range>
                             <!--Flag indicating whether or not the values of the coordinates should be limited to the range, above.-->
@@ -5843,18 +6021,20 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/scapula_l</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
                             <!-- shkey -->
-                            <translation>0 0 0</translation>
+                            <translation>0 0.0 -0.13126</translation>
+                            <!-- <translation>0 -0.04 0</translation> -->
+                            <!-- <translation>0 0 0</translation> -->
                             <!-- default -->
                             <!-- <translation>-0.0095499447834722345 -0.034001364113029092 -0.008996821850851211</translation> -->
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <!-- shkey -->
-                            <orientation>1.57 0 0</orientation>
+                            <orientation>1.5707950000000199 0 0</orientation>
                             <!-- default -->
                             <!-- <orientation>0 0 0</orientation> -->
                         </PhysicalOffsetFrame>
@@ -5864,7 +6044,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/humerus_l</socket_parent>
@@ -5872,7 +6052,7 @@
                             <translation>0 0 0</translation>
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <!-- shkey -->
-                            <!-- <orientation>-1.57 0 0</orientation> -->
+                            <!-- <orientation>-1.5707950000000199 0 0</orientation> -->
                             <!-- default -->
                             <orientation>0 0 0</orientation>
                         </PhysicalOffsetFrame>
@@ -5990,13 +6170,13 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/humerus_r</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
                             <!-- shkey -->
-                            <translation>0 -0.29 0</translation>
+                            <translation>0 -0.2842 0</translation>
                             <!-- default -->
                             <!-- <translation>0.0061000044831427585 -0.29040116109488806 -0.01229988504701285</translation> -->
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
@@ -6008,13 +6188,16 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/ulna_r</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
                             <translation>0 0 0</translation>
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
+                            <!-- shkey -->
+                            <!-- <orientation>-0.12 0 0</orientation> -->
+                            <!-- default -->
                             <orientation>0 0 0</orientation>
                         </PhysicalOffsetFrame>
                     </frames>
@@ -6131,13 +6314,13 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/humerus_l</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
                             <!-- shkey -->
-                            <translation>0 -0.29 0</translation>
+                            <translation>0 -0.2842 0</translation>
                             <!-- default -->
                             <!-- <translation>0.0061000044831427585 -0.29040116109488806 0.01229988504701285</translation> -->
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
@@ -6149,14 +6332,17 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/ulna_l</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
+                            <!-- shkey -->
+                            <!-- <translation>0 0 -0.01</translation> -->
+                            <!-- default -->
                             <translation>0 0 0</translation>
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
-                            <orientation>0 0 0</orientation>
+                            <orientation>0.12 0 0</orientation>
                         </PhysicalOffsetFrame>
                     </frames>
                     <!--Defines how the child body moves with respect to the parent as a function of the generalized coordinates.-->
@@ -6272,12 +6458,15 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/ulna_r</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
-                            <translation>0.00040000000000000002 -0.011502999999999999 0.019998999999999999</translation>
+                            <!-- shkey -->
+                            <translation>0 0 0</translation>
+                            <!-- default -->
+                            <!-- <translation>0.00040000000000000002 -0.011502999999999999 0.019998999999999999</translation> -->
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <orientation>0 0 0</orientation>
                         </PhysicalOffsetFrame>
@@ -6287,7 +6476,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/radius_r</socket_parent>
@@ -6410,12 +6599,15 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/ulna_l</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
-                            <translation>0.00040000000000000002 -0.011502999999999999 -0.019998999999999999</translation>
+                            <!-- shkey -->
+                            <translation>0 0 0</translation>
+                            <!-- default -->
+                            <!-- <translation>0.00040000000000000002 -0.011502999999999999 -0.019998999999999999</translation> -->
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <orientation>0 0 0</orientation>
                         </PhysicalOffsetFrame>
@@ -6425,7 +6617,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/radius_l</socket_parent>
@@ -6560,12 +6752,15 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/radius_r</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
-                            <translation>0.017999999999999999 -0.24199999999999999 0.025000000000000001</translation>
+                            <!-- shkey -->
+                            <translation>0 -0.24368 0.02938</translation>
+                            <!-- default -->
+                            <!-- <translation>0.017999999999999999 -0.24199999999999999 0.025000000000000001</translation> -->
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <orientation>0 0 0</orientation>
                         </PhysicalOffsetFrame>
@@ -6575,7 +6770,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/hand_r</socket_parent>
@@ -6695,12 +6890,15 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/radius_l</socket_parent>
                             <!--Translational offset (in meters) of this frame's origin from the parent frame's origin, expressed in the parent frame.-->
-                            <translation>0.017999999999999999 -0.24199999999999999 -0.025000000000000001</translation>
+                            <!-- shkey -->
+                            <translation>0 -0.24368 -0.02938</translation>
+                            <!-- default -->
+                            <!-- <translation>0.017999999999999999 -0.24199999999999999 -0.025000000000000001</translation> -->
                             <!--Orientation offset (in radians) of this frame in its parent frame, expressed as a frame-fixed x-y-z rotation sequence.-->
                             <orientation>0 0 0</orientation>
                         </PhysicalOffsetFrame>
@@ -6710,7 +6908,7 @@
                                 <!--Path to a Component that satisfies the Socket 'frame' of type Frame.-->
                                 <socket_frame>..</socket_frame>
                                 <!--Scale factors in X, Y, Z directions respectively.-->
-                                <scale_factors>0.20000000000000001 0.20000000000000001 0.20000000000000001</scale_factors>
+                                <scale_factors>0.2 0.2 0.2</scale_factors>
                             </FrameGeometry>
                             <!--Path to a Component that satisfies the Socket 'parent' of type C (description: The parent frame to this frame.).-->
                             <socket_parent>/bodyset/hand_l</socket_parent>

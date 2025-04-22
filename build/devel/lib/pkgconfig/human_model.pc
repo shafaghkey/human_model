@@ -1,0 +1,8 @@
+prefix=/home/shkey/catkins/human_model_ws/src/human_model/build/devel
+
+Name: human_model
+Description: Description of human_model
+Version: 0.1.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

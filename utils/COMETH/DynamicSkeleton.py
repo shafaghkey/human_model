@@ -171,6 +171,8 @@ class DynamicSkeleton(ConstrainedSkeleton):
         self.q_l = np.ones((49))*(-180)
         self.q_u = np.ones((49))*180
 
+        # [0:3] pelvis_list, pelvis_tilt, pelvis_rotation
+        # [3:6] pelvis_tx, pelvis_ty, pelvis_tz
         self.q_l[0:6], self.q_u[0:6] = -np.inf, np.inf  # pelvis
         self.q_l[6], self.q_u[6] = -40, 140     # hip_r_flexion_r
         self.q_l[7], self.q_u[7] = -45, 45      # hip_r_adduction_r

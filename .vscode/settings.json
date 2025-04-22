@@ -1,0 +1,12 @@
+{
+    "python.analysis.typeCheckingMode": "off",
+    "files.autoSave": "onFocusChange",
+    "workbench.view.alwaysShowHeaderActions": true,
+    "zenMode.hideLineNumbers": true,
+    "workbench.tips.enabled": true,
+    "workbench.statusBar.visible": true,
+    "workbench.editor.centeredLayoutFixedWidth": false,
+    "zenMode.restore": true,
+    "zenMode.silentNotifications": true,
+    "window.autoDetectColorScheme": false
+}
